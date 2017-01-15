@@ -1,1 +1,1 @@
-include ':app', ':tab-controller'
+include ':tab-controller', ':sample'
