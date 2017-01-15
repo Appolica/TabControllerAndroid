@@ -30,13 +30,12 @@ public class TabController {
 
         inTransaction(transaction -> {
 
-            hideVisibleFragment(transaction);
-
             final Fragment fragmentToShow = fragmentManager.findFragmentByTag(fragmentType.getTag());
 //
             if (fragmentToShow != null) {
                 if (!isVisible(fragmentToShow)) {
                     //Fragment is active but not visible
+                    hideVisibleFragment(transaction);
                     showFragment(fragmentToShow, transaction);
 
                     notifiers.add(listener -> listener.onFragmentShown(fragmentType, fragmentToShow));
@@ -47,6 +46,8 @@ public class TabController {
                 }
             } else {
                 //Fragment does not exist
+                hideVisibleFragment(transaction);
+
                 Fragment addedFragment = addToFragmentManager(fragmentType, transaction);
 
                 notifiers.add(listener -> listener.onFragmentCreated(fragmentType, addedFragment));
@@ -160,6 +161,10 @@ public class TabController {
             }
 
 
+    }
+
+    public void setChangeListener(OnFragmentChangeListener changeListener) {
+        this.changeListener = changeListener;
     }
 
     private static interface TransactionBody {
