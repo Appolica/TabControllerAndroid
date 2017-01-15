@@ -37,11 +37,10 @@ public class TabController {
 
         List<Notifier> notifiers = new ArrayList<>();
 
-
         inTransaction(transaction -> {
 
             final Fragment fragmentToShow = fragmentManager.findFragmentByTag(fragmentType.getTag());
-//
+
             if (fragmentToShow != null) {
                 if (!isVisible(fragmentToShow)) {
                     //Fragment is active but not visible
@@ -73,10 +72,10 @@ public class TabController {
         final Fragment visibleFragment = fragmentManager.findFragmentByTag(currentFragment.getTag());
 
         if (visibleFragment != null) {
-            fragmentManager.beginTransaction()
-                    .hide(visibleFragment)
-                    .commitNow();
+            final FragmentTransaction transaction = fragmentManager.beginTransaction()
+                    .hide(visibleFragment);
 
+            commit(transaction);
         }
     }
 
@@ -114,7 +113,7 @@ public class TabController {
     }
 
     private boolean isVisible(Fragment fragment) {
-        return fragment.isVisible();
+        return !fragment.isHidden();
     }
 
     public void restore(@Nullable Bundle savedInstanceState) {
@@ -156,12 +155,18 @@ public class TabController {
 
         List<Notifier> notifiers = body.runInTransaction(transaction);
 
-        transaction.commitNow();
+        commit(transaction);
 
         if (changeListener != null)
             for (Notifier notifier : notifiers) {
                 notifier.notifyListener(changeListener);
             }
+    }
+
+    private void commit(FragmentTransaction transaction) {
+//        transaction.commitNow();
+        transaction.commit();
+        fragmentManager.executePendingTransactions();
     }
 
     public void setChangeListener(OnFragmentChangeListener changeListener) {

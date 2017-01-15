@@ -24,52 +24,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:text="Tab 1"
             android:onClick="@{() -> clickListener.onTab1Click()}"
+            android:text="Tab 1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            />
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
         <Button
             android:id="@+id/buttonTab2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tab 2"
             android:onClick="@{() -> clickListener.onTab2Click()}"
-            app:layout_constraintLeft_toRightOf="@+id/buttonTab1"
-            app:layout_constraintBottom_toBottomOf="@+id/buttonTab1"/>
+            android:text="Tab 2"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonTab1"
+            app:layout_constraintLeft_toRightOf="@+id/buttonTab1"/>
 
         <Button
             android:id="@+id/buttonTab3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tab 3"
             android:onClick="@{() -> clickListener.onTab3Click()}"
+            android:text="Tab 3"
             app:layout_constraintBottom_toBottomOf="@+id/buttonTab2"
-            app:layout_constraintRight_toLeftOf="@+id/buttonTab4"
-            />
+            app:layout_constraintRight_toLeftOf="@+id/buttonTab4"/>
 
         <Button
             android:id="@+id/buttonTab4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tab 4"
             android:onClick="@{() -> clickListener.onTab4Click()}"
+            android:text="Tab 4"
             app:layout_constraintBottom_toBottomOf="@+id/buttonTab3"
-            app:layout_constraintRight_toRightOf="parent"
-            />
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <FrameLayout
+            android:id="@+id/container"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/buttonTab1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/holder"
-            >
-
-        </FrameLayout>
+            app:layout_constraintTop_toTopOf="parent"/>
     </android.support.constraint.ConstraintLayout>
 
 </layout>
