@@ -4,11 +4,6 @@ import android.support.v4.app.Fragment;
 
 import com.appolica.tabcontroller.FragmentProvider;
 
-/**
- * Created by Bogomil Kolarov on 15.01.17.
- * Copyright © 2017 Appolica. All rights reserved.
- */
-
 public enum Tabs implements FragmentProvider {
     TAB_1(1),
     TAB_2(2),

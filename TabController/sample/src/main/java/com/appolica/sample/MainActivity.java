@@ -2,6 +2,7 @@ package com.appolica.sample;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,9 +25,14 @@ public class MainActivity extends AppCompatActivity implements TabClickListener,
 
         binding.setClickListener(this);
         tabController = new TabController(getSupportFragmentManager(), R.id.holder);
-
         tabController.setChangeListener(this);
-        tabController.switchTo(Tabs.TAB_1);
+
+        if (savedInstanceState != null) {
+            tabController.restore(savedInstanceState);
+        } else {
+            tabController.switchTo(Tabs.TAB_1);
+        }
+
     }
 
     @Override
@@ -62,5 +68,11 @@ public class MainActivity extends AppCompatActivity implements TabClickListener,
     @Override
     public void onFragmentCreated(FragmentProvider fragmentType, Fragment addedFragment) {
         Log.d(TAG, "onFragmentCreated: " + fragmentType.getTag());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        tabController.save(outState);
     }
 }
