@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements TabClickListener,
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         binding.setClickListener(this);
-        tabController = new TabController(getSupportFragmentManager(), R.id.holder);
+        tabController = new TabController(getSupportFragmentManager(), R.id.container);
         tabController.setChangeListener(this);
 
         if (savedInstanceState != null) {
