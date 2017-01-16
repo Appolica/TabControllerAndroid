@@ -8,16 +8,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TabControllerActivity" android:label="@string/title_tab_controller">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".TabControllerFragmentActivity" android:label="@string/title_tab_controller_fragment">
-
-        </activity>
+        <activity
+            android:name=".TabControllerActivity"
+            android:label="@string/title_tab_controller"/>
+        <activity
+            android:name=".TabControllerFragmentActivity"
+            android:label="@string/title_tab_controller_fragment"/>
     </application>
 
 </manifest>
