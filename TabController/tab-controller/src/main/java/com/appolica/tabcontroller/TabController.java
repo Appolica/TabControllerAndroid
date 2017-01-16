@@ -12,6 +12,8 @@ import java.util.List;
 
 public class TabController {
 
+    private static final String TAG = "TabController";
+
     public static final String BUNDLE_KEY = "bundle-key-tab-controller";
 
     private final FragmentManager fragmentManager;
@@ -48,7 +50,6 @@ public class TabController {
                     showFragment(fragmentToShow, transaction);
 
                     notifiers.add(listener -> listener.onFragmentShown(fragmentType, fragmentToShow));
-
                 } else {
                     //Fragment is visible on the screen
                     notifiers.add(listener -> listener.onFragmentAlreadyVisible(fragmentType, fragmentToShow));
@@ -64,7 +65,6 @@ public class TabController {
             }
 
             return notifiers;
-
         });
     }
 
@@ -72,10 +72,11 @@ public class TabController {
         final Fragment visibleFragment = fragmentManager.findFragmentByTag(currentFragment.getTag());
 
         if (visibleFragment != null) {
-            final FragmentTransaction transaction = fragmentManager.beginTransaction()
-                    .hide(visibleFragment);
 
-            commit(transaction);
+            inTransaction(transaction -> {
+                showHideHandler.hide(transaction, visibleFragment);
+                return new ArrayList<>();
+            });
         }
     }
 
@@ -151,22 +152,26 @@ public class TabController {
     }
 
     private void inTransaction(@NonNull TransactionBody body) {
+        inTransaction(body, FragmentTransaction::commitNow);
+    }
+
+    private void inAsyncTransaction(@NonNull TransactionBody body) {
+        inTransaction(body, FragmentTransaction::commit);
+    }
+
+    private void inTransaction(@NonNull TransactionBody body, @NonNull TransactionCommitter committer) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.setAllowOptimization(false);
 
         List<Notifier> notifiers = body.runInTransaction(transaction);
 
-        commit(transaction);
+        committer.commitTransaction(transaction);
 
         if (changeListener != null)
             for (Notifier notifier : notifiers) {
                 notifier.notifyListener(changeListener);
             }
-    }
-
-    private void commit(FragmentTransaction transaction) {
-//        transaction.commitNow();
-        transaction.commit();
-        fragmentManager.executePendingTransactions();
     }
 
     public void setChangeListener(OnFragmentChangeListener changeListener) {
@@ -184,6 +189,11 @@ public class TabController {
     private static interface TransactionBody {
         @NonNull
         public List<Notifier> runInTransaction(FragmentTransaction fragmentTransaction);
+    }
+
+    private static interface TransactionCommitter {
+        @NonNull
+        public void commitTransaction(FragmentTransaction fragmentTransaction);
     }
 
     private static interface Notifier {

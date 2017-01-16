@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 
 public interface OnFragmentChangeListener {
 
-
     void onFragmentShown(FragmentProvider fragmentType, Fragment shownFragment);
 
     void onFragmentAlreadyVisible(FragmentProvider fragmentType, Fragment visibleFragment);
