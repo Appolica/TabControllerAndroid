@@ -1,6 +1,8 @@
-package com.appolica.tabcontroller;
+package com.appolica.tabcontroller.listener;
 
 import android.support.v4.app.Fragment;
+
+import com.appolica.tabcontroller.FragmentProvider;
 
 public class SimpleFragmentChangeListener implements OnFragmentChangeListener {
     @Override

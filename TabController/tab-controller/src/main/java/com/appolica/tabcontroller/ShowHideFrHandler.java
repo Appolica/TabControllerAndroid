@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
-public class ShowHideFragmentHandler implements ShowHideHandler {
+public class ShowHideFrHandler implements ShowHideHandler {
     @Override
     public FragmentTransaction show(FragmentTransaction transaction, Fragment fragment) {
 

@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
+import com.appolica.tabcontroller.listener.OnFragmentChangeListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,7 @@ public class TabController {
 
 
     public TabController(FragmentManager fragmentManager, int containerId) {
-        this(fragmentManager, containerId, new ShowHideFragmentHandler());
+        this(fragmentManager, containerId, new ShowHideFrHandler());
     }
 
     public TabController(FragmentManager fragmentManager, int containerId, ShowHideHandler showHideHandler) {

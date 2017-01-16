@@ -7,24 +7,32 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.appolica.sample.databinding.ActivityMainBinding;
+import com.appolica.sample.databinding.ActivityTabFragmentBinding;
 import com.appolica.tabcontroller.FragmentProvider;
-import com.appolica.tabcontroller.OnFragmentChangeListener;
 import com.appolica.tabcontroller.TabController;
+import com.appolica.tabcontroller.fragment.TabControllerFragment;
+import com.appolica.tabcontroller.listener.OnFragmentChangeListener;
 
-public class MainActivity extends AppCompatActivity implements TabClickListener, OnFragmentChangeListener {
+public class TabControllerFragmentActivity
+        extends AppCompatActivity
+        implements TabClickListener, OnFragmentChangeListener {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "TabControllerActivity";
 
     private TabController tabController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        final ActivityTabFragmentBinding binding =
+                DataBindingUtil.setContentView(this, R.layout.activity_fragment_tab_controller);
 
         binding.setClickListener(this);
-        tabController = new TabController(getSupportFragmentManager(), R.id.container);
+
+        final TabControllerFragment tabControllerFragment =
+                (TabControllerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+
+        tabController = tabControllerFragment.getTabController();
         tabController.setChangeListener(this);
 
         if (savedInstanceState != null) {
@@ -32,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements TabClickListener,
         } else {
             tabController.switchTo(Tabs.TAB_1);
         }
-
     }
 
     @Override
