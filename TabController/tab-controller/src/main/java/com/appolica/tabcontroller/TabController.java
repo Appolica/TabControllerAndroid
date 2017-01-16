@@ -180,14 +180,6 @@ public class TabController {
         this.changeListener = changeListener;
     }
 
-    public ShowHideHandler getShowHideHandler() {
-        return showHideHandler;
-    }
-
-    public void setShowHideHandler(ShowHideHandler showHideHandler) {
-        this.showHideHandler = showHideHandler;
-    }
-
     private static interface TransactionBody {
         @NonNull
         public List<Notifier> runInTransaction(FragmentTransaction fragmentTransaction);

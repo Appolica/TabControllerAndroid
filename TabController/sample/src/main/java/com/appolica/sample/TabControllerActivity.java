@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.appolica.sample.databinding.ActivityTabControllerBinding;
+import com.appolica.tabcontroller.AttachDetachHandler;
 import com.appolica.tabcontroller.FragmentProvider;
 import com.appolica.tabcontroller.TabController;
 import com.appolica.tabcontroller.listener.OnFragmentChangeListener;
@@ -27,7 +28,8 @@ public class TabControllerActivity
                 DataBindingUtil.setContentView(this, R.layout.activity_tab_controller);
 
         binding.setClickListener(this);
-        tabController = new TabController(getSupportFragmentManager(), R.id.container);
+
+        tabController = new TabController(getSupportFragmentManager(), R.id.container, new AttachDetachHandler());
         tabController.setChangeListener(this);
 
         if (savedInstanceState != null) {
