@@ -46,14 +46,14 @@ public class TabController {
             final Fragment fragmentToShow = fragmentManager.findFragmentByTag(fragmentType.getTag());
 
             if (fragmentToShow != null) {
-                if (!isVisible(fragmentToShow)) {
+                if (!showHideHandler.isVisible(fragmentToShow)) {
                     //Fragment is active but not visible
                     hideVisibleFragment(transaction);
                     showFragment(fragmentToShow, transaction);
 
                     notifiers.add(listener -> listener.onFragmentShown(fragmentType, fragmentToShow));
                 } else {
-                    //Fragment is visible on the screen
+                    //Fragment is already visible on the screen
                     notifiers.add(listener -> listener.onFragmentAlreadyVisible(fragmentType, fragmentToShow));
                 }
             } else {
@@ -106,17 +106,13 @@ public class TabController {
         if (fragments != null) {
             for (Fragment fragment : fragments) {
 
-                if (fragment != null && isVisible(fragment)) {
+                if (fragment != null && showHideHandler.isVisible(fragment)) {
                     return fragment;
                 }
             }
         }
 
         return null;
-    }
-
-    private boolean isVisible(Fragment fragment) {
-        return !fragment.isHidden();
     }
 
     public void restore(@Nullable Bundle savedInstanceState) {

@@ -35,4 +35,9 @@ public class ShowHideFrHandler implements ShowHideHandler {
             }
         }
     }
+
+    @Override
+    public boolean isVisible(Fragment fragment) {
+        return !fragment.isHidden();
+    }
 }
