@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'com.novoda.bintray-release' // must be applied after your artifact generating plugin (eg. java / com.android.library)
 
 buildscript {
     repositories {
@@ -8,6 +8,7 @@ buildscript {
 
     dependencies {
         classpath "me.tatarka:gradle-retrolambda:3.4.0"
+        classpath 'com.novoda:bintray-release:0.4.0'
     }
 
 }
@@ -48,4 +49,15 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
+}
+
+publish {
+    userOrg = 'appolica-ltd'
+    groupId = 'com.appolica'
+    artifactId = 'tab-controller'
+    publishVersion = '1.0.0'
+    desc = 'A helper library for managing fragments in a certain way.'
+    website = 'https://github.com/Appolica/TabControllerAndroid'
+    licences = ['Apache-2.0']
+    uploadName = 'TabControllerAndroid'
 }
