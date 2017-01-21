@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Sample</string>
+    <string name="title_tab_controller">Tab Controller</string>
+    <string name="title_tab_controller_fragment">Tab Controller Fragment</string>
+</resources>

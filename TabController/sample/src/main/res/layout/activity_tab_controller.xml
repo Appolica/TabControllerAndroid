@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.appolica.sample.TabClickListener"/>
+
+        <variable
+            name="clickListener"
+            type="TabClickListener"/>
+
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.appolica.sample.TabControllerActivity">
+
+        <Button
+            android:id="@+id/buttonTab1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{() -> clickListener.onTab1Click()}"
+            android:text="Tab 1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <Button
+            android:id="@+id/buttonTab2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> clickListener.onTab2Click()}"
+            android:text="Tab 2"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonTab1"
+            app:layout_constraintLeft_toRightOf="@+id/buttonTab1"/>
+
+        <Button
+            android:id="@+id/buttonTab3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> clickListener.onTab3Click()}"
+            android:text="Tab 3"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonTab2"
+            app:layout_constraintRight_toLeftOf="@+id/buttonTab4"/>
+
+        <Button
+            android:id="@+id/buttonTab4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> clickListener.onTab4Click()}"
+            android:text="Tab 4"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonTab3"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonTab1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

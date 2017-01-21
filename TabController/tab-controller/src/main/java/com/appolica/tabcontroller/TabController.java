@@ -2,51 +2,64 @@ package com.appolica.tabcontroller;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+
+import com.appolica.tabcontroller.listener.OnFragmentChangeListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TabController {
 
+    private static final String TAG = "TabController";
+
+    public static final String BUNDLE_KEY = "bundle-key-tab-controller";
+
     private final FragmentManager fragmentManager;
     private final int containerId;
+
+    private ShowHideHandler showHideHandler;
 
     private OnFragmentChangeListener changeListener;
 
 
     public TabController(FragmentManager fragmentManager, int containerId) {
+        this(fragmentManager, containerId, new ShowHideFrHandler());
+    }
+
+    public TabController(FragmentManager fragmentManager, int containerId, ShowHideHandler showHideHandler) {
         this.fragmentManager = fragmentManager;
         FragmentManager.enableDebugLogging(false);
         this.containerId = containerId;
+        this.showHideHandler = showHideHandler;
     }
 
     public void switchTo(FragmentProvider fragmentType) {
 
         List<Notifier> notifiers = new ArrayList<>();
 
-
         inTransaction(transaction -> {
 
-            hideVisibleFragment(transaction);
-
             final Fragment fragmentToShow = fragmentManager.findFragmentByTag(fragmentType.getTag());
-//
+
             if (fragmentToShow != null) {
-                if (!isVisible(fragmentToShow)) {
+                if (!showHideHandler.isVisible(fragmentToShow)) {
                     //Fragment is active but not visible
+                    hideVisibleFragment(transaction);
                     showFragment(fragmentToShow, transaction);
 
                     notifiers.add(listener -> listener.onFragmentShown(fragmentType, fragmentToShow));
-
                 } else {
-                    //Fragment is visible on the screen
+                    //Fragment is already visible on the screen
                     notifiers.add(listener -> listener.onFragmentAlreadyVisible(fragmentType, fragmentToShow));
                 }
             } else {
                 //Fragment does not exist
+                hideVisibleFragment(transaction);
+
                 Fragment addedFragment = addToFragmentManager(fragmentType, transaction);
 
                 notifiers.add(listener -> listener.onFragmentCreated(fragmentType, addedFragment));
@@ -54,25 +67,23 @@ public class TabController {
             }
 
             return notifiers;
-
         });
-
-
     }
 
     private void hide(FragmentProvider currentFragment) {
         final Fragment visibleFragment = fragmentManager.findFragmentByTag(currentFragment.getTag());
 
         if (visibleFragment != null) {
-            fragmentManager.beginTransaction()
-                    .hide(visibleFragment)
-                    .commitNow();
 
+            inTransaction(transaction -> {
+                showHideHandler.hide(transaction, visibleFragment);
+                return new ArrayList<>();
+            });
         }
     }
 
     private void showFragment(Fragment fragment, FragmentTransaction transaction) {
-        transaction.show(fragment);
+        showHideHandler.show(transaction, fragment);
     }
 
     private Fragment addToFragmentManager(FragmentProvider fragmentType, FragmentTransaction transaction) {
@@ -86,7 +97,7 @@ public class TabController {
         final Fragment visibleFragment = getVisibleFragment();
 
         if (visibleFragment != null) {
-            fragmentTransaction.hide(visibleFragment);
+            showHideHandler.hide(fragmentTransaction, visibleFragment);
         }
     }
 
@@ -95,7 +106,7 @@ public class TabController {
         if (fragments != null) {
             for (Fragment fragment : fragments) {
 
-                if (fragment != null && isVisible(fragment)) {
+                if (fragment != null && showHideHandler.isVisible(fragment)) {
                     return fragment;
                 }
             }
@@ -104,73 +115,78 @@ public class TabController {
         return null;
     }
 
-    private boolean isVisible(Fragment fragment) {
-        return fragment.isVisible();
-    }
-
-    public void restore(Bundle savedInstanceState) {
+    public void restore(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
+            final Bundle controllerState = savedInstanceState.getBundle(BUNDLE_KEY);
             List<Fragment> fragments = fragmentManager.getFragments();
 
             inTransaction(transaction -> {
 
                 if (fragments != null) {
                     for (Fragment fragment : fragments) {
-
-                        boolean visible = savedInstanceState.getBoolean(fragment.getTag());
-
-                        if (visible) {
-                            transaction.show(fragment);
-                        } else {
-                            transaction.hide(fragment);
-                        }
+                        showHideHandler.restore(controllerState, transaction, fragment);
                     }
-
                 }
 
                 return new ArrayList<>();
             });
-
         }
     }
 
     public void save(Bundle savedInstanceState) {
+
+        final Bundle controllerState = new Bundle();
+
         List<Fragment> fragments = fragmentManager.getFragments();
         if (fragments != null) {
 
             for (Fragment fragment : fragments) {
 
-                boolean visible = !fragment.isHidden();
-                savedInstanceState.putBoolean(fragment.getTag(), visible);
-
+                showHideHandler.save(controllerState, fragment);
             }
         }
+
+        savedInstanceState.putBundle(BUNDLE_KEY, controllerState);
     }
 
     private void inTransaction(@NonNull TransactionBody body) {
+        inTransaction(body, FragmentTransaction::commitNow);
+    }
+
+    private void inAsyncTransaction(@NonNull TransactionBody body) {
+        inTransaction(body, FragmentTransaction::commit);
+    }
+
+    private void inTransaction(@NonNull TransactionBody body, @NonNull TransactionCommitter committer) {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        transaction.setAllowOptimization(false);
 
         List<Notifier> notifiers = body.runInTransaction(transaction);
 
-        transaction.commitNow();
+        committer.commitTransaction(transaction);
 
         if (changeListener != null)
             for (Notifier notifier : notifiers) {
                 notifier.notifyListener(changeListener);
             }
+    }
 
-
+    public void setChangeListener(OnFragmentChangeListener changeListener) {
+        this.changeListener = changeListener;
     }
 
     private static interface TransactionBody {
-        public
         @NonNull
-        List<Notifier> runInTransaction(FragmentTransaction fragmentTransaction);
+        public List<Notifier> runInTransaction(FragmentTransaction fragmentTransaction);
+    }
+
+    private static interface TransactionCommitter {
+        @NonNull
+        public void commitTransaction(FragmentTransaction fragmentTransaction);
     }
 
     private static interface Notifier {
         public void notifyListener(@NonNull OnFragmentChangeListener onFragmentChangeListener);
     }
-
-
 }
