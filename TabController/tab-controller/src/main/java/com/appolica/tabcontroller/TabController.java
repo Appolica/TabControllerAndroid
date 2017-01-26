@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentTransaction;
 import com.appolica.tabcontroller.listener.OnFragmentChangeListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class TabController {
@@ -102,13 +103,10 @@ public class TabController {
     }
 
     private Fragment getVisibleFragment() {
-        final List<Fragment> fragments = fragmentManager.getFragments();
-        if (fragments != null) {
-            for (Fragment fragment : fragments) {
-
-                if (fragment != null && showHideHandler.isVisible(fragment)) {
-                    return fragment;
-                }
+        final List<Fragment> fragments = getFMFragments();
+        for (Fragment fragment : fragments) {
+            if (showHideHandler.isVisible(fragment)) {
+                return fragment;
             }
         }
 
@@ -118,14 +116,12 @@ public class TabController {
     public void restore(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             final Bundle controllerState = savedInstanceState.getBundle(BUNDLE_KEY);
-            List<Fragment> fragments = fragmentManager.getFragments();
+            final List<Fragment> fragments = getFMFragments();
 
             inTransaction(transaction -> {
 
-                if (fragments != null) {
-                    for (Fragment fragment : fragments) {
-                        showHideHandler.restore(controllerState, transaction, fragment);
-                    }
+                for (Fragment fragment : fragments) {
+                    showHideHandler.restore(controllerState, transaction, fragment);
                 }
 
                 return new ArrayList<>();
@@ -137,13 +133,11 @@ public class TabController {
 
         final Bundle controllerState = new Bundle();
 
-        List<Fragment> fragments = fragmentManager.getFragments();
-        if (fragments != null) {
+        final List<Fragment> fragments = getFMFragments();
 
-            for (Fragment fragment : fragments) {
+        for (Fragment fragment : fragments) {
 
-                showHideHandler.save(controllerState, fragment);
-            }
+            showHideHandler.save(controllerState, fragment);
         }
 
         savedInstanceState.putBundle(BUNDLE_KEY, controllerState);
@@ -174,6 +168,28 @@ public class TabController {
 
     public void setChangeListener(OnFragmentChangeListener changeListener) {
         this.changeListener = changeListener;
+    }
+
+    @NonNull
+    private List<Fragment> getFMFragments() {
+        final List<Fragment> fmList = fragmentManager.getFragments();
+
+        final List<Fragment> resultList = new ArrayList<>();
+
+        if (fmList != null) {
+
+            resultList.addAll(fmList);
+
+            final Iterator<Fragment> iterator = resultList.iterator();
+            while (iterator.hasNext()) {
+
+                if (iterator.next() == null) {
+                    iterator.remove();
+                }
+            }
+        }
+
+        return resultList;
     }
 
     private static interface TransactionBody {
