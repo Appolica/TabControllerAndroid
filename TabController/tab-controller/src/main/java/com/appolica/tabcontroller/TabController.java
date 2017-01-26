@@ -104,11 +104,9 @@ public class TabController {
 
     private Fragment getVisibleFragment() {
         final List<Fragment> fragments = getFMFragments();
-        if (fragments != null) {
-            for (Fragment fragment : fragments) {
-                if (showHideHandler.isVisible(fragment)) {
-                    return fragment;
-                }
+        for (Fragment fragment : fragments) {
+            if (showHideHandler.isVisible(fragment)) {
+                return fragment;
             }
         }
 
@@ -122,10 +120,8 @@ public class TabController {
 
             inTransaction(transaction -> {
 
-                if (fragments != null) {
-                    for (Fragment fragment : fragments) {
-                        showHideHandler.restore(controllerState, transaction, fragment);
-                    }
+                for (Fragment fragment : fragments) {
+                    showHideHandler.restore(controllerState, transaction, fragment);
                 }
 
                 return new ArrayList<>();
@@ -138,12 +134,10 @@ public class TabController {
         final Bundle controllerState = new Bundle();
 
         final List<Fragment> fragments = getFMFragments();
-        if (fragments != null) {
 
-            for (Fragment fragment : fragments) {
+        for (Fragment fragment : fragments) {
 
-                showHideHandler.save(controllerState, fragment);
-            }
+            showHideHandler.save(controllerState, fragment);
         }
 
         savedInstanceState.putBundle(BUNDLE_KEY, controllerState);
@@ -176,20 +170,26 @@ public class TabController {
         this.changeListener = changeListener;
     }
 
-    @Nullable
+    @NonNull
     private List<Fragment> getFMFragments() {
-        final List<Fragment> fragments = fragmentManager.getFragments();
+        final List<Fragment> fmList = fragmentManager.getFragments();
 
-        if (fragments != null) {
-            final Iterator<Fragment> iterator = fragments.iterator();
+        final List<Fragment> resultList = new ArrayList<>();
+
+        if (fmList != null) {
+
+            resultList.addAll(fmList);
+
+            final Iterator<Fragment> iterator = resultList.iterator();
             while (iterator.hasNext()) {
+
                 if (iterator.next() == null) {
                     iterator.remove();
                 }
             }
         }
 
-        return fragments;
+        return resultList;
     }
 
     private static interface TransactionBody {
