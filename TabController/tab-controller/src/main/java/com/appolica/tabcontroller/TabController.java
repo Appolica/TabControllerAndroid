@@ -102,7 +102,8 @@ public class TabController {
         }
     }
 
-    private Fragment getVisibleFragment() {
+    @Nullable
+    public Fragment getVisibleFragment() {
         final List<Fragment> fragments = getFMFragments();
         for (Fragment fragment : fragments) {
             if (showHideHandler.isVisible(fragment)) {
@@ -111,6 +112,11 @@ public class TabController {
         }
 
         return null;
+    }
+
+    @Nullable
+    public Fragment getFragment(@NonNull FragmentProvider fragmentProvider) {
+        return fragmentManager.findFragmentByTag(fragmentProvider.getTag());
     }
 
     public void restore(@Nullable Bundle savedInstanceState) {
