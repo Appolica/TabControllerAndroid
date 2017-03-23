@@ -29,6 +29,16 @@ public class TabControllerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         tabController = new TabController(getChildFragmentManager(), R.id.container);
+
+        if (savedInstanceState != null) {
+            tabController.restore(savedInstanceState);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        tabController.save(outState);
     }
 
     public TabController getTabController() {
