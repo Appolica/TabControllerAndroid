@@ -13,11 +13,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The core of the library. This class controls the switching between fragments.
+ */
 public class TabController {
 
     private static final String TAG = "TabController";
 
-    public static final String BUNDLE_KEY = "bundle-key-tab-controller";
+    private static final String BUNDLE_KEY = "bundle-key-tab-controller";
 
     private final FragmentManager fragmentManager;
     private final int containerId;
@@ -26,11 +29,28 @@ public class TabController {
 
     private OnFragmentChangeListener changeListener;
 
-
+    /**
+     * Create a new instance of {@link TabController} with the default {@link ShowHideHandler}.
+     *
+     * @param fragmentManager The support fragment manager, used to switch between fragments.
+     * @param containerId The view id of the container for your fragments.
+     *
+     * @see ShowHideHandler
+     */
     public TabController(FragmentManager fragmentManager, int containerId) {
         this(fragmentManager, containerId, new ShowHideFrHandler());
     }
 
+    /**
+     * Create a new instance of {@link TabController}.
+     *
+     * @param fragmentManager The support fragment manager, used to switch between fragments.
+     * @param containerId The view id of the container for your fragments.
+     * @param showHideHandler The {@link ShowHideHandler} which determines how your fragments
+     *                        are going to be shown/hidden.
+     *
+     * @see ShowHideHandler
+     */
     public TabController(FragmentManager fragmentManager, int containerId, ShowHideHandler showHideHandler) {
         this.fragmentManager = fragmentManager;
         FragmentManager.enableDebugLogging(false);
@@ -38,13 +58,26 @@ public class TabController {
         this.showHideHandler = showHideHandler;
     }
 
-    public void switchTo(FragmentProvider fragmentType) {
+    /**
+     * Show the given fragment in the container, provided to the constructor. If
+     * FragmentManager::findFragmentByTag returns null for the tag your, given by te provider,
+     * your fragment's instance will be obtained by calling FragmentProvider::getInstance.
+     * Otherwise it will be reused.
+     *
+     * If there is already a visible fragment, it will be hidden. How fragments are shown/hidden
+     * depends on {@link ShowHideHandler}.
+     *
+     * @param provider The {@link FragmentProvider} for the fragment you want to show.
+     *
+     * @see FragmentProvider
+     */
+    public void switchTo(FragmentProvider provider) {
 
         List<Notifier> notifiers = new ArrayList<>();
 
         inTransaction(transaction -> {
 
-            final Fragment fragmentToShow = fragmentManager.findFragmentByTag(fragmentType.getTag());
+            final Fragment fragmentToShow = fragmentManager.findFragmentByTag(provider.getTag());
 
             if (fragmentToShow != null) {
                 if (!showHideHandler.isVisible(fragmentToShow)) {
@@ -52,19 +85,19 @@ public class TabController {
                     hideVisibleFragment(transaction);
                     showFragment(fragmentToShow, transaction);
 
-                    notifiers.add(listener -> listener.onFragmentShown(fragmentType, fragmentToShow));
+                    notifiers.add(listener -> listener.onFragmentShown(provider, fragmentToShow));
                 } else {
                     //Fragment is already visible on the screen
-                    notifiers.add(listener -> listener.onFragmentAlreadyVisible(fragmentType, fragmentToShow));
+                    notifiers.add(listener -> listener.onFragmentAlreadyVisible(provider, fragmentToShow));
                 }
             } else {
                 //Fragment does not exist
                 hideVisibleFragment(transaction);
 
-                Fragment addedFragment = addToFragmentManager(fragmentType, transaction);
+                Fragment addedFragment = addToFragmentManager(provider, transaction);
 
-                notifiers.add(listener -> listener.onFragmentCreated(fragmentType, addedFragment));
-                notifiers.add(listener -> listener.onFragmentShown(fragmentType, addedFragment));
+                notifiers.add(listener -> listener.onFragmentCreated(provider, addedFragment));
+                notifiers.add(listener -> listener.onFragmentShown(provider, addedFragment));
             }
 
             return notifiers;
@@ -102,6 +135,11 @@ public class TabController {
         }
     }
 
+    /**
+     * Iterates through the fragments, returned by FragmentManager::getFragments.
+     *
+     * @return The first visible fragment found in the list or null.
+     */
     @Nullable
     public Fragment getVisibleFragment() {
         final List<Fragment> fragments = getFMFragments();
@@ -114,11 +152,28 @@ public class TabController {
         return null;
     }
 
+    /**
+     * Find a fragment by it's {@link FragmentProvider}. Same as calling
+     * fragmentManager.findFragmentByTag(fragmentProvider.getTag());
+     *
+     * @param fragmentProvider The fragment provider of the fragment you want to obtain.
+     * @return The fragment which the given {@link FragmentProvider} is for.
+     */
     @Nullable
     public Fragment getFragment(@NonNull FragmentProvider fragmentProvider) {
         return fragmentManager.findFragmentByTag(fragmentProvider.getTag());
     }
 
+    /**
+     * Restore the state of the {@link TabController}. This will show the last visible fragment
+     * before saving the state.
+     * <br>
+     * Make sure you call {@link #save(Bundle)} when saving your instance
+     * state.
+     *
+     * @param savedInstanceState The saved instance state Bundle where the TabController state
+     *                           wil be obtained from.
+     */
     public void restore(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             final Bundle controllerState = savedInstanceState.getBundle(BUNDLE_KEY);
@@ -135,6 +190,13 @@ public class TabController {
         }
     }
 
+    /**
+     * Save the state of the {@link TabController} in order to be able to restore your last visible
+     * fragment when your app restores.
+     * <br>
+     * Make sure you call {@link #restore(Bundle)} when restoring your instance state.
+     * @param savedInstanceState The output Bundle where the state will be saved to.
+     */
     public void save(Bundle savedInstanceState) {
 
         final Bundle controllerState = new Bundle();

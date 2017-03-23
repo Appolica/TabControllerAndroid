@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
+/**
+ *
+ */
 public class AttachDetachHandler implements ShowHideHandler {
     private static final String TAG = "AttachDetachHandler";
 
