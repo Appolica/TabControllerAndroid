@@ -40,6 +40,41 @@ final TabController tabController = new TabController(getSupportFragmentManager(
 
 It doesn't matter whether you use your own container or TabControllerFragment. Once you obtain a TabController instance, everything is the same.
 
-In order to show your fragment you have to use `TabController::switchTo` method. This method accepts an implementation of `FragmentProvider`. 
+In order to show your fragment you have to use `TabController::switchTo` method. This method accepts an implementation of `FragmentProvider`.
+Suppose you have multiple fragments and the first one is called `HomeFragment`. Then you would need something like `HomeFragmentProvider`, that implements `FragmentProvider`.
+
+```java
+public class HomeFragment extends Fragment {
+    public static final String TAG = "HomeFragment";
+
+    public static HomeFragment getInstance(int tabNum) {
+        final HomeFragment fragment = new HomeFragment();
+
+        return tab;
+    }
+
+    ...
+}
+```
+```java
+class HomeFragmentProvider implements FragmentProvider{
+    @Override
+    public String getTag() {
+        return HomeFragment.TAG;
+    }
+
+    @Override
+    public Fragment getInstance() {
+        return HomeFragment.getInstance();
+    }
+}
+```
+Create an instance of `HomeFragmentProvider` and pass it to `TabController::switchTo` in order to show your `HomeFragment`.
+```java
+final HomeFragmentProvider homeProvider = new HomeFragmentProvider();
+tabController.switchTo(homeProvider);
+```
+The `TabController` will create a new instance (by calling `FragmentProvider::getInstance`) of your fragment if it hasn't been already created. This depends on whether `FragmentManager::findFragmentByTag` returns `null` for the tag, given by `FragmentProvider::getTag`.
+
 
 ## API
