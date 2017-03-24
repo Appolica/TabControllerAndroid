@@ -32,9 +32,9 @@ public class ShowHideFrHandler implements ShowHideHandler {
         if (savedControllerState != null) {
             boolean visible = savedControllerState.getBoolean(fragment.getTag());
             if (visible) {
-                transaction.show(fragment);
+                show(transaction, fragment);
             } else {
-                transaction.hide(fragment);
+                hide(transaction, fragment);
             }
         }
     }
