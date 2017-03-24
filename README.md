@@ -105,12 +105,19 @@ Implementations of this interface determine how your fragments are going to be s
 
 #### FragmentProvider
 Used by `TabController`. Implementation of this interface should provide a tag and an instance of the fragment that will be shown/hidden by the controller.
+
+##### Public methods:
+
 * `String getTag()` - Provide the fragment's tag.
 * `Fragment getInstance()` - Provide fragment's instance.
 
+#### OnFragmentChangeListener
+Pass this listener to `TabController.setChangeListener(OnFragmentChangeListener)` to be notified for one of it's events.
 
-
-
+##### Public methods:
+* `void onFragmentShown(FragmentProvider provider, Fragment shownFragment)` - Called when one of your fragments has been shown.
+* `void onFragmentAlreadyVisible(FragmentProvider provider, Fragment visibleFragment)` - Called on attempt to show an already visible fragment.
+* `void onFragmentCreated(FragmentProvider provider, Fragment createdFragment)` - Called when the fragment you want to show has been created by the TabController.
 
 
 
