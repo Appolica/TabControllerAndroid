@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
 /**
- * Implementations of this interface determine how your fragment's are going to be shown/hidden.
+ * Implementations of this interface determine how your fragments are going to be shown/hidden.
  * It could be by using {@link FragmentTransaction#show(Fragment)}/{@link FragmentTransaction#hide(Fragment)}
  * or {@link FragmentTransaction#attach(Fragment)}/{@link FragmentTransaction#detach(Fragment)}
  */
@@ -46,9 +46,9 @@ public interface ShowHideHandler {
      * Called when {@link TabController} is restoring its state. In some cases (like when you
      * show/hide your fragment by using FragmentTransaction::show/hide) in order to restore the
      * visibility of your fragments you should implement this method. Your fragment will become
-     * visible or hidden, depending on what action you add to the given {@link FragmentTransaction}.
+     * visible or hidden depending on what action you add to the given {@link FragmentTransaction}.
      * <br>
-     * This method is called for each fragment, returned from {@link FragmentManager#getFragments()}.
+     * This method is called for each fragment returned from {@link FragmentManager#getFragments()}.
      *
      * @param savedControllerState The bundle you restore your visibility state from.
      * @param transaction The transaction your fragment will be shown/hidden again.
