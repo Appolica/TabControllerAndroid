@@ -6,7 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
 /**
- *
+ * An implementation of {@link ShowHideHandler} that uses {@link FragmentTransaction#show(Fragment)}
+ * and {@link FragmentTransaction#hide(Fragment)} to show/hide fragments.
  */
 public class ShowHideFrHandler implements ShowHideHandler {
     @Override

@@ -7,7 +7,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 /**
- *
+ * An implementation of {@link ShowHideHandler} that uses {@link FragmentTransaction#attach(Fragment)}
+ * and {@link FragmentTransaction#detach(Fragment)} to show/hide fragments.
  */
 public class AttachDetachHandler implements ShowHideHandler {
     private static final String TAG = "AttachDetachHandler";
