@@ -92,6 +92,20 @@ The `TabController` will create a new instance (by calling `FragmentProvider::ge
 * `void restore(@Nullable Bundle savedInstanceState)` - Restore the state of the `TabController`. This will show the last visible fragment before saving the state.
 * `void setChangeListener(OnFragmentChangeListener changeListener)` - Set listener to be notified on one of the `TabController`'s events.
 
+#### ShowHideHandler
+Implementations of this interface determine how your fragments are going to be shown/hidden. It could be by using `FragmentTransaction.show(Fragment)`/`FragmentTransaction.hide(Fragment)` or `FragmentTransaction.attach(Fragment)`/`FragmentTransaction.detach(Fragment)`.
+
+##### Public methods:
+
+* `FragmentTransaction show(FragmentTransaction transaction, Fragment fragment)` - Show the given fragment within the given transaction the way you want.
+* `FragmentTransaction hide(FragmentTransaction transaction, Fragment fragment)` - Hide the given fragment within the given transaction the way you want.
+* `void save(Bundle saveControllerState, Fragment fragment)` - Called when TabController is saving its state. In some cases (like when you show/hide your fragment by using `FragmentTransaction.show/hide`) you may want to save the visibility of your fragment. This is where you should do that. This method is called for each fragment, returned from `FragmentManager.getFragments()`.
+* `void restore(@Nullable Bundle savedControllerState, FragmentTransaction transaction, Fragment fragment)` - Called when `TabController` is restoring its state. In some cases (like when you show/hide your fragment by using `FragmentTransaction.show/hide`) in order to restore the visibility of your fragments you should implement this method. Your fragment will become visible or hidden depending on what action you add to the given `FragmentTransaction`. This method is called for each fragment returned from `FragmentManagegetFragments()`.
+* `boolean isVisible(Fragment fragment)` - Since Fragment.isVisible() and Fragment.isHidden() work different, `TabController` is using this abstract method, relying that the implementation will work properly.
+
+
+
+
 
 
 
