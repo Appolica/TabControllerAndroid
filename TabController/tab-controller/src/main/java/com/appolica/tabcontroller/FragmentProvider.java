@@ -15,7 +15,7 @@ public interface FragmentProvider {
     public String getTag();
 
     /**
-     * Obtain fragment's instance.
+     * Provide fragment's instance.
      * @return The fragment's instance.
      */
     public Fragment getInstance();
