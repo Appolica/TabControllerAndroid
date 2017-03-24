@@ -63,18 +63,18 @@ public class TabControllerFragmentActivity
     }
 
     @Override
-    public void onFragmentShown(FragmentProvider fragmentType, Fragment shownFragment) {
-        Log.d(TAG, "onFragmentShown: " + fragmentType.getTag());
+    public void onFragmentShown(FragmentProvider provider, Fragment shownFragment) {
+        Log.d(TAG, "onFragmentShown: " + provider.getTag());
     }
 
     @Override
-    public void onFragmentAlreadyVisible(FragmentProvider fragmentType, Fragment visibleFragment) {
-        Log.d(TAG, "onFragmentAlreadyVisible: " + fragmentType.getTag());
+    public void onFragmentAlreadyVisible(FragmentProvider provider, Fragment visibleFragment) {
+        Log.d(TAG, "onFragmentAlreadyVisible: " + provider.getTag());
     }
 
     @Override
-    public void onFragmentCreated(FragmentProvider fragmentType, Fragment addedFragment) {
-        Log.d(TAG, "onFragmentCreated: " + fragmentType.getTag());
+    public void onFragmentCreated(FragmentProvider provider, Fragment createdFragment) {
+        Log.d(TAG, "onFragmentCreated: " + provider.getTag());
     }
 
     @Override

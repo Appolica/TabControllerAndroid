@@ -234,6 +234,13 @@ public class TabController {
             }
     }
 
+    /**
+     * Set listener to be notified on one of the {@link TabController}'s events.
+     *
+     * @param changeListener Your implementation of the listener.
+     *
+     * @see OnFragmentChangeListener
+     */
     public void setChangeListener(OnFragmentChangeListener changeListener) {
         this.changeListener = changeListener;
     }
