@@ -60,7 +60,7 @@ public class TabController {
 
     /**
      * Show the given fragment in the container, provided to the constructor. If
-     * FragmentManager::findFragmentByTag returns null for the tag your, given by te provider,
+     * FragmentManager::findFragmentByTag returns null for the tag, given by the provider,
      * your fragment's instance will be obtained by calling FragmentProvider::getInstance.
      * Otherwise it will be reused.
      *
