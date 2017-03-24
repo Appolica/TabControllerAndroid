@@ -103,6 +103,10 @@ Implementations of this interface determine how your fragments are going to be s
 * `void restore(@Nullable Bundle savedControllerState, FragmentTransaction transaction, Fragment fragment)` - Called when `TabController` is restoring its state. In some cases (like when you show/hide your fragment by using `FragmentTransaction.show/hide`) in order to restore the visibility of your fragments you should implement this method. Your fragment will become visible or hidden depending on what action you add to the given `FragmentTransaction`. This method is called for each fragment returned from `FragmentManagegetFragments()`.
 * `boolean isVisible(Fragment fragment)` - Since Fragment.isVisible() and Fragment.isHidden() work different, `TabController` is using this abstract method, relying that the implementation will work properly.
 
+#### FragmentProvider
+Used by `TabController`. Implementation of this interface should provide a tag and an instance of the fragment that will be shown/hidden by the controller.
+* `String getTag()` - Provide the fragment's tag.
+* `Fragment getInstance()` - Provide fragment's instance.
 
 
 
