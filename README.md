@@ -96,7 +96,6 @@ The `TabController` will create a new instance (by calling `FragmentProvider::ge
 Implementations of this interface determine how your fragments are going to be shown/hidden. It could be by using `FragmentTransaction.show(Fragment)`/`FragmentTransaction.hide(Fragment)` or `FragmentTransaction.attach(Fragment)`/`FragmentTransaction.detach(Fragment)`.
 
 ##### Public methods:
-
 * `FragmentTransaction show(FragmentTransaction transaction, Fragment fragment)` - Show the given fragment within the given transaction the way you want.
 * `FragmentTransaction hide(FragmentTransaction transaction, Fragment fragment)` - Hide the given fragment within the given transaction the way you want.
 * `void save(Bundle saveControllerState, Fragment fragment)` - Called when TabController is saving its state. In some cases (like when you show/hide your fragment by using `FragmentTransaction.show/hide`) you may want to save the visibility of your fragment. This is where you should do that. This method is called for each fragment, returned from `FragmentManager.getFragments()`.
@@ -107,7 +106,6 @@ Implementations of this interface determine how your fragments are going to be s
 Used by `TabController`. Implementation of this interface should provide a tag and an instance of the fragment that will be shown/hidden by the controller.
 
 ##### Public methods:
-
 * `String getTag()` - Provide the fragment's tag.
 * `Fragment getInstance()` - Provide fragment's instance.
 
@@ -119,7 +117,12 @@ Pass this listener to `TabController.setChangeListener(OnFragmentChangeListener)
 * `void onFragmentAlreadyVisible(FragmentProvider provider, Fragment visibleFragment)` - Called on attempt to show an already visible fragment.
 * `void onFragmentCreated(FragmentProvider provider, Fragment createdFragment)` - Called when the fragment you want to show has been created by the TabController.
 
+#### TabControllerFragment
+An encapsulation for the fragments that are managed through the `TabController`. All of these fragments are switched between within this fragment using child fragment manager.<br>
+We encourage you to use this fragment in order to restrict the access of the `TabController` to any other fragments, that aren't related to it and vice versa.
 
+##### Public methods:
+* `TabController getTabController()` - Obtain the `TabController`. Its instance is created in `Fragment.onViewCreated(View, Bundle)`.
 
 
 
