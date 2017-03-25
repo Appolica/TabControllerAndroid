@@ -2,19 +2,22 @@ package com.appolica.sample;
 
 import android.support.v4.app.Fragment;
 
+import com.appolica.sample.tabs.FlatFragment;
+import com.appolica.sample.tabs.pager.ViewPagerFragment;
+import com.appolica.sample.tabs.stack.StackFragment;
 import com.appolica.tabcontroller.FragmentProvider;
 
 public enum Tabs implements FragmentProvider {
-    TAB_1(1),
-    TAB_2(2),
-    TAB_3(3),
-    TAB_4(4)
+    TAB_1(ViewPagerFragment.class),
+    TAB_2(StackFragment.class),
+    TAB_3(FlatFragment.class),
+    TAB_4(StackFragment.class)
     ;
 
-    private int tabNum;
+    private Class<? extends Fragment> fragmentClass;
 
-    Tabs(int tabNum) {
-        this.tabNum = tabNum;
+    Tabs(Class<? extends Fragment> fragmentClass) {
+        this.fragmentClass = fragmentClass;
     }
 
     @Override
@@ -24,6 +27,14 @@ public enum Tabs implements FragmentProvider {
 
     @Override
     public Fragment getInstance() {
-        return SampleTab.getInstance(tabNum);
+        try {
+            return fragmentClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
