@@ -4,12 +4,18 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.appolica.sample.Tabs;
 import com.appolica.sample.tabs.NestedFragment;
 
 
 public class PagerAdapter extends FragmentPagerAdapter {
     public PagerAdapter(FragmentManager fm) {
         super(fm);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return Tabs.values()[position].name();
     }
 
     @Override
