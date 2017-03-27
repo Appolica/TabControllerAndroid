@@ -1,4 +1,4 @@
-package com.appolica.sample;
+package com.appolica.sample.activity;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.appolica.sample.R;
+import com.appolica.sample.TabClickListener;
+import com.appolica.sample.Tabs;
 import com.appolica.sample.databinding.ActivityTabControllerBinding;
 import com.appolica.tabcontroller.AttachDetachHandler;
 import com.appolica.tabcontroller.FragmentProvider;
