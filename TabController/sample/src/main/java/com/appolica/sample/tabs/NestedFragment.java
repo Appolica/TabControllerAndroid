@@ -41,7 +41,5 @@ public class NestedFragment extends Fragment {
 
         final int fragmentIndex = getArguments().getInt(KEY_FRAGMENT_INDEX);
         binding.setText(getString(R.string.stack_fragment_index, fragmentIndex));
-
-        binding.executePendingBindings();
     }
 }
