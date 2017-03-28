@@ -8,10 +8,9 @@ import com.appolica.sample.tabs.stack.StackFragment;
 import com.appolica.tabcontroller.FragmentProvider;
 
 public enum Tabs implements FragmentProvider {
-    TAB_1(ViewPagerFragment.class),
-    TAB_2(StackFragment.class),
-    TAB_3(FlatFragment.class),
-    TAB_4(StackFragment.class)
+    TAB_1(StackFragment.class),
+    TAB_2(ViewPagerFragment.class),
+    TAB_3(FlatFragment.class)
     ;
 
     private Class<? extends Fragment> fragmentClass;

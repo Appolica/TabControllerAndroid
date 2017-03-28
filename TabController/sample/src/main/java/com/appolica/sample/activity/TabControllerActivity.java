@@ -40,7 +40,6 @@ public class TabControllerActivity
         } else {
             tabController.switchTo(Tabs.TAB_1);
         }
-
     }
 
     @Override
@@ -60,7 +59,7 @@ public class TabControllerActivity
 
     @Override
     public void onTab4Click() {
-        tabController.switchTo(Tabs.TAB_4);
+//        tabController.switchTo(Tabs.TAB_4);
     }
 
     @Override
