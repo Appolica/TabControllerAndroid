@@ -122,6 +122,11 @@ public class TabController {
     public void restore(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             final Bundle controllerState = savedInstanceState.getBundle(BUNDLE_KEY);
+
+            if (controllerState == null) {
+                throw new IllegalStateException("TabController's bundle not found in savedInstanceState. Did you call TabController::save in onSaveInstanceState(outState)?");
+            }
+
             final List<Fragment> fragments = getFMFragments();
 
             inTransaction(transaction -> {

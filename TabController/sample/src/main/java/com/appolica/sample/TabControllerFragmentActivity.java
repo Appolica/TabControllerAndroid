@@ -35,9 +35,7 @@ public class TabControllerFragmentActivity
         tabController = tabControllerFragment.getTabController();
         tabController.setChangeListener(this);
 
-        if (savedInstanceState != null) {
-            tabController.restore(savedInstanceState);
-        } else {
+        if (savedInstanceState == null) {
             tabController.switchTo(Tabs.TAB_1);
         }
     }
@@ -77,9 +75,4 @@ public class TabControllerFragmentActivity
         Log.d(TAG, "onFragmentCreated: " + fragmentType.getTag());
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        tabController.save(outState);
-    }
 }
