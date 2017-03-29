@@ -5,17 +5,17 @@
         id="@+id/tab_stack"
         icon="@drawable/ic_tab_stack"
         title="Stack"
-        barColorWhenSelected="#00838f"/>
+        barColorWhenSelected="@color/colorTabStack"/>
 
     <tab
         id="@+id/tab_pager"
         icon="@drawable/ic_tab_pager"
         title="ViewPager"
-        barColorWhenSelected="@color/colorPrimary"/>
+        barColorWhenSelected="@color/colorTabPager"/>
 
     <tab
         id="@+id/tab_flat"
         icon="@drawable/ic_tab_flat"
         title="Flat"
-        barColorWhenSelected="#5e35b1"/>
+        barColorWhenSelected="@color/colorTabFlat"/>
 </tabs>

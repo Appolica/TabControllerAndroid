@@ -10,4 +10,7 @@
     <color name="colorDividers">#BDBDBD</color>
     <color name="colorTabLayout">#f5f5f5</color>
     <color name="colorTabIdle">#bdbdbd</color>
+    <color name="colorTabStack">#1976d2</color>
+    <color name="colorTabPager">#3F51B5</color>
+    <color name="colorTabFlat">#1976d2</color>
 </resources>
