@@ -41,10 +41,9 @@ public class TabControllerFragmentActivity
 
         if (savedInstanceState != null) {
             binding.bottomBar.onRestoreInstanceState(savedInstanceState.getParcelable(BUNDLE_BOTTOM_BAR));
-            tabController.restore(savedInstanceState);
         }
 
-        binding.bottomBar.setOnTabSelectListener(new BottomBarListener(this), true);
+        binding.bottomBar.setOnTabSelectListener(new BottomBarListener(this), false);
     }
 
     @Override
@@ -67,7 +66,6 @@ public class TabControllerFragmentActivity
         super.onSaveInstanceState(outState, outPersistentState);
         final Parcelable bottomBarParcelable = binding.bottomBar.onSaveInstanceState();
 
-        tabController.save(outState);
         outState.putParcelable(BUNDLE_BOTTOM_BAR, bottomBarParcelable);
     }
 

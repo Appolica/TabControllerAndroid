@@ -11,55 +11,37 @@ import com.appolica.sample.R;
 import com.appolica.sample.TabClickListener;
 import com.appolica.sample.Tabs;
 import com.appolica.sample.databinding.ActivityTabControllerBinding;
+import com.appolica.sample.tabs.BottomBarListener;
 import com.appolica.tabcontroller.AttachDetachHandler;
 import com.appolica.tabcontroller.FragmentProvider;
+import com.appolica.tabcontroller.ShowHideFrHandler;
 import com.appolica.tabcontroller.TabController;
 import com.appolica.tabcontroller.listener.OnFragmentChangeListener;
 
 public class TabControllerActivity
         extends AppCompatActivity
-        implements TabClickListener, OnFragmentChangeListener {
+        implements OnFragmentChangeListener, BottomBarListener.BottomBarTabListener {
 
+    private static final String BUNDLE_BOTTOM_BAR = TabControllerFragmentActivity.class.getName() + ":BottomBar";
     private static final String TAG = "TabControllerActivity";
 
     private TabController tabController;
+    private ActivityTabControllerBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityTabControllerBinding binding =
-                DataBindingUtil.setContentView(this, R.layout.activity_tab_controller);
-
-        binding.setClickListener(this);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_tab_controller);
 
         tabController = new TabController(getSupportFragmentManager(), R.id.container, new AttachDetachHandler());
         tabController.setChangeListener(this);
 
         if (savedInstanceState != null) {
+            binding.bottomBar.onRestoreInstanceState(savedInstanceState.getParcelable(BUNDLE_BOTTOM_BAR));
             tabController.restore(savedInstanceState);
-        } else {
-            tabController.switchTo(Tabs.TAB_1);
         }
-    }
 
-    @Override
-    public void onTab1Click() {
-        tabController.switchTo(Tabs.TAB_1);
-    }
-
-    @Override
-    public void onTab2Click() {
-        tabController.switchTo(Tabs.TAB_2);
-    }
-
-    @Override
-    public void onTab3Click() {
-        tabController.switchTo(Tabs.TAB_3);
-    }
-
-    @Override
-    public void onTab4Click() {
-//        tabController.switchTo(Tabs.TAB_4);
+        binding.bottomBar.setOnTabSelectListener(new BottomBarListener(this), true);
     }
 
     @Override
@@ -78,8 +60,23 @@ public class TabControllerActivity
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
         tabController.save(outState);
+    }
+
+    @Override
+    public void onStackSelected() {
+        tabController.switchTo(Tabs.TAB_1);
+    }
+
+    @Override
+    public void onViewPagerSelected() {
+        tabController.switchTo(Tabs.TAB_2);
+    }
+
+    @Override
+    public void onFlatSelected() {
+        tabController.switchTo(Tabs.TAB_3);
     }
 }
