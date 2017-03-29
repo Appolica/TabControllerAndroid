@@ -4,7 +4,7 @@ Tabs can be switched by using either show/hide or attach/detach. You can even pr
 
 The library is developed and maintained by [Appolica](http://www.appolica.com).
 
-![Sample](https://github.com/Appolica/TabControllerAndroid/blob/feature/documentation/doc_resources/gif/sample.gif?raw=true)
+<img src="https://github.com/Appolica/TabControllerAndroid/blob/feature/documentation/doc_resources/gif/sample.gif?raw=true" height="500">
 
 ## Example
 
