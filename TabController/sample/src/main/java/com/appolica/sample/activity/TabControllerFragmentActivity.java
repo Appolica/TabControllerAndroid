@@ -43,7 +43,7 @@ public class TabControllerFragmentActivity
             binding.bottomBar.onRestoreInstanceState(savedInstanceState.getParcelable(BUNDLE_BOTTOM_BAR));
         }
 
-        binding.bottomBar.setOnTabSelectListener(new BottomBarListener(this), false);
+        binding.bottomBar.setOnTabSelectListener(new BottomBarListener(this), true);
     }
 
     @Override
