@@ -5,6 +5,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 
+/**
+ * An implementation of {@link ShowHideHandler} that uses {@link FragmentTransaction#show(Fragment)}
+ * and {@link FragmentTransaction#hide(Fragment)} to show/hide fragments.
+ */
 public class ShowHideFrHandler implements ShowHideHandler {
     @Override
     public FragmentTransaction show(FragmentTransaction transaction, Fragment fragment) {
@@ -14,13 +18,12 @@ public class ShowHideFrHandler implements ShowHideHandler {
 
     @Override
     public FragmentTransaction hide(FragmentTransaction transaction, Fragment fragment) {
-
         return transaction.hide(fragment);
     }
 
     @Override
     public void save(Bundle saveControllerState, Fragment fragment) {
-        boolean visible = !fragment.isHidden();
+        boolean visible = isVisible(fragment);
         saveControllerState.putBoolean(fragment.getTag(), visible);
     }
 
@@ -29,9 +32,9 @@ public class ShowHideFrHandler implements ShowHideHandler {
         if (savedControllerState != null) {
             boolean visible = savedControllerState.getBoolean(fragment.getTag());
             if (visible) {
-                transaction.show(fragment);
+                show(transaction, fragment);
             } else {
-                transaction.hide(fragment);
+                hide(transaction, fragment);
             }
         }
     }

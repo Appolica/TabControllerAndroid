@@ -6,17 +6,17 @@ import com.appolica.tabcontroller.FragmentProvider;
 
 public class SimpleFragmentChangeListener implements OnFragmentChangeListener {
     @Override
-    public void onFragmentShown(FragmentProvider fragmentType, Fragment shownFragment) {
+    public void onFragmentShown(FragmentProvider provider, Fragment shownFragment) {
 
     }
 
     @Override
-    public void onFragmentAlreadyVisible(FragmentProvider fragmentType, Fragment visibleFragment) {
+    public void onFragmentAlreadyVisible(FragmentProvider provider, Fragment visibleFragment) {
 
     }
 
     @Override
-    public void onFragmentCreated(FragmentProvider fragmentType, Fragment addedFragment) {
+    public void onFragmentCreated(FragmentProvider provider, Fragment createdFragment) {
 
     }
 }
