@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <tab
+        id="@+id/tab_stack"
+        icon="@drawable/ic_tab_stack"
+        title="Stack"
+        barColorWhenSelected="@color/colorTabStack"/>
+
+    <tab
+        id="@+id/tab_pager"
+        icon="@drawable/ic_tab_pager"
+        title="ViewPager"
+        barColorWhenSelected="@color/colorTabPager"/>
+
+    <tab
+        id="@+id/tab_flat"
+        icon="@drawable/ic_tab_flat"
+        title="Flat"
+        barColorWhenSelected="@color/colorTabFlat"/>
+</tabs>

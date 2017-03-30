@@ -1,12 +1,12 @@
-package com.appolica.sample;
+package com.appolica.sample.activity;
 
 import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
+import com.appolica.sample.R;
 import com.appolica.sample.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;

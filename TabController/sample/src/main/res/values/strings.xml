@@ -2,4 +2,8 @@
     <string name="app_name">Sample</string>
     <string name="title_tab_controller">Tab Controller</string>
     <string name="title_tab_controller_fragment">Tab Controller Fragment</string>
+    <string name="button_push">Push</string>
+    <string name="button_pop">Pop</string>
+    <string name="stack_fragment_index">Fragment: %d</string>
+    <string name="fragment_flat">Flat Fragment</string>
 </resources>
