@@ -18,13 +18,12 @@ public class ShowHideFrHandler implements ShowHideHandler {
 
     @Override
     public FragmentTransaction hide(FragmentTransaction transaction, Fragment fragment) {
-
         return transaction.hide(fragment);
     }
 
     @Override
     public void save(Bundle saveControllerState, Fragment fragment) {
-        boolean visible = !fragment.isHidden();
+        boolean visible = isVisible(fragment);
         saveControllerState.putBoolean(fragment.getTag(), visible);
     }
 

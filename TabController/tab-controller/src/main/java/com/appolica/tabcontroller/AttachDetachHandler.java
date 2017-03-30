@@ -37,6 +37,6 @@ public class AttachDetachHandler implements ShowHideHandler {
 
     @Override
     public boolean isVisible(Fragment fragment) {
-        return fragment.isVisible();
+        return !fragment.isDetached();
     }
 }
