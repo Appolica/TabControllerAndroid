@@ -17,6 +17,9 @@ apply plugin: 'me.tatarka.retrolambda'
 
 
 android {
+    lintOptions {
+        abortOnError false
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -28,8 +31,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.3"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -56,7 +59,7 @@ publish {
     userOrg = 'appolica-ltd'
     groupId = 'com.appolica'
     artifactId = 'tab-controller'
-    publishVersion = '1.0.2'
+    publishVersion = '1.0.3'
     desc = 'A helper library for managing fragments in a certain way.'
     website = 'https://github.com/Appolica/TabControllerAndroid'
     licences = ['Apache-2.0']
