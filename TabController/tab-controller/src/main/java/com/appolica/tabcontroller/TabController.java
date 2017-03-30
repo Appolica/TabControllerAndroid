@@ -278,7 +278,7 @@ public class TabController {
     }
 
     private static interface TransactionCommitter {
-        @NonNull
+
         public void commitTransaction(FragmentTransaction fragmentTransaction);
     }
 
