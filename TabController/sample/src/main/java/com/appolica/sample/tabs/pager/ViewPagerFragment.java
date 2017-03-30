@@ -33,7 +33,6 @@ public class ViewPagerFragment extends Fragment {
 
         binding.tabLayout.setupWithViewPager(binding.viewPager);
 
-        binding.viewPager.setOffscreenPageLimit(1);
         binding.viewPager.setAdapter(pagerAdapter);
     }
 }
