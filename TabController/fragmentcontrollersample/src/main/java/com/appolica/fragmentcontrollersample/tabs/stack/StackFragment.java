@@ -26,7 +26,7 @@ public class StackFragment extends Fragment implements StackFragmentClickListene
         binding =
                 DataBindingUtil.inflate(inflater, R.layout.fragment_tab_stack, container, false);
 
-        fragmentController = FragmentController.instance(FragmentsType.NESTED);
+        fragmentController = FragmentController.instance(FragmentsType.NESTED.withIndex(0));
 
         getChildFragmentManager().beginTransaction()
                 .replace(R.id.container, fragmentController, CONTROLLER_TAG)
