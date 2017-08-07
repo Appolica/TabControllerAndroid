@@ -1,1 +1,1 @@
-include ':tab-controller', ':sample'
+include ':tab-controller', ':sample', ':fragmentcontrollersample'
