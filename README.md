@@ -1,3 +1,4 @@
+# Deprecated. Please see https://developer.android.com/guide/navigation
 # TabControllerAndroid *by Appolica*
 This library provides an easy to use API for switching between fragments that share the same container. Implementing tabs, such as the ones Instagram has at the bottom of the layout, is a much simpler goal to achieve when using **TabController**.<br>
 Tabs can be switched by using either show/hide or attach/detach. You can even provide your own implementation of the way tabs are being shown.
