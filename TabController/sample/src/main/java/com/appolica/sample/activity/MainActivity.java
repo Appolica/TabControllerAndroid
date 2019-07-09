@@ -1,10 +1,11 @@
 package com.appolica.sample.activity;
 
 import android.app.Activity;
-import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.appolica.sample.R;
 import com.appolica.sample.databinding.ActivityMainBinding;

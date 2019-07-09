@@ -1,6 +1,7 @@
 package com.appolica.sample;
 
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
 
 import com.appolica.sample.tabs.FlatFragment;
 import com.appolica.sample.tabs.pager.ViewPagerFragment;

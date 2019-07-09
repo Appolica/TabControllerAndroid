@@ -8,7 +8,7 @@
         android:clickable="true"
         android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_margin="5dp"
@@ -22,7 +22,7 @@
                 android:background="@android:color/transparent"
                 android:gravity="center_vertical"/>
 
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 </layout>

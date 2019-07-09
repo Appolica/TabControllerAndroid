@@ -1,6 +1,7 @@
 package com.appolica.sample.tabs;
 
-import android.support.annotation.IdRes;
+
+import androidx.annotation.IdRes;
 
 import com.appolica.sample.R;
 import com.roughike.bottombar.OnTabSelectListener;
