@@ -4,7 +4,12 @@ Tabs can be switched by using either show/hide or attach/detach. You can even pr
 
 The library is developed and maintained by [Appolica](http://www.appolica.com).
 
-<img src="https://github.com/Appolica/TabControllerAndroid/blob/feature/documentation/doc_resources/gif/sample.gif?raw=true" height="500">
+<img src="https://github.com/Appolica/TabControllerAndroid/blob/master/doc_resources/gif/sample.gif?raw=true" height="500">
+
+*Note: The sample uses [BottomBar](https://github.com/roughike/BottomBar) in order to give a nice example of using this library. TabController is for managing fragments and does not provide any UI views.*
+
+## Download
+[ ![Download](https://api.bintray.com/packages/appolica-ltd/maven/TabControllerAndroid/images/download.svg) ](https://bintray.com/appolica-ltd/maven/TabControllerAndroid/_latestVersion)
 
 *Note: The sample uses [BottomBar](https://github.com/roughike/BottomBar) in order to give a nice example of using this library. TabController is for managing fragments and does not provide any UI views.*
 

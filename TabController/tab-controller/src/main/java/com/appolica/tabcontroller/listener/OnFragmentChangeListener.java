@@ -1,6 +1,7 @@
 package com.appolica.tabcontroller.listener;
 
-import android.support.v4.app.Fragment;
+
+import androidx.fragment.app.Fragment;
 
 import com.appolica.tabcontroller.FragmentProvider;
 
